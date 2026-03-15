@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { getReadingTime } from '../../utils/readingTime';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+  return tags.map(tag => ({
+    params: { tag },
+    props: {
+      posts: posts
+        .filter(post => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`${tag} — Darshnik Swamy`} description={`Posts tagged "${tag}"`}>
+  <div class="max-w-[1080px] mx-auto px-6 py-16 md:py-24">
+    <a href="/blog" class="text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors">
+      &larr; All writing
+    </a>
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text)] dark:text-[var(--color-dark-text)] mt-4 mb-8">
+      Tagged: {tag}
+    </h1>
+    <div class="divide-y divide-[var(--color-border)] dark:divide-[var(--color-dark-border)]">
+      {posts.map(post => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          tags={post.data.tags}
+          readingTime={post.data.readingTime || getReadingTime(post.body || '')}
+          slug={post.id}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

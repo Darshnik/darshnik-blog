@@ -1,0 +1,40 @@
+---
+import { formatDate } from '../utils/formatDate';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  readingTime?: number;
+  slug: string;
+}
+
+const { title, description, pubDate, tags, readingTime, slug } = Astro.props;
+---
+
+<article class="group">
+  <a href={`/blog/${slug}`} class="block py-6 -mx-4 px-4 rounded-lg hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface)] transition-colors">
+    <div class="flex items-center gap-3 text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] mb-2">
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+      {readingTime && (
+        <span>&middot; {readingTime} min read</span>
+      )}
+    </div>
+    <h3 class="text-xl font-semibold text-[var(--color-text)] dark:text-[var(--color-dark-text)] group-hover:text-[var(--color-accent)] dark:group-hover:text-[var(--color-dark-accent)] transition-colors mb-2">
+      {title}
+    </h3>
+    <p class="text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] line-clamp-2">
+      {description}
+    </p>
+    {tags.length > 0 && (
+      <div class="flex gap-2 mt-3">
+        {tags.map(tag => (
+          <span class="text-xs px-2 py-1 rounded-full bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)]">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+  </a>
+</article>

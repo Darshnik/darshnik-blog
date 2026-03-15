@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { getReadingTime } from '../../utils/readingTime';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
+---
+
+<BaseLayout title="Writing — Darshnik Swamy" description="Essays on sport, history, tech, and the future.">
+  <div class="max-w-[1080px] mx-auto px-6 py-16 md:py-24">
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text)] dark:text-[var(--color-dark-text)] mb-4">
+      Writing
+    </h1>
+    <p class="text-lg text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] mb-8">
+      Essays on sport, history, tech, and the future.
+    </p>
+
+    <div class="mb-10 flex items-center gap-3">
+      <button
+        id="search-toggle"
+        aria-label="Search posts"
+        class="p-2 rounded-lg text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface)] transition-colors cursor-pointer"
+      >
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
+      <div id="search" class="hidden flex-1"></div>
+    </div>
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <script src="/pagefind/pagefind-ui.js" is:inline></script>
+    <script is:inline>
+      function initSearch() {
+        var container = document.getElementById('search');
+        var toggle = document.getElementById('search-toggle');
+        if (!container || !toggle) return;
+        if (toggle.dataset.bound) return;
+        toggle.dataset.bound = 'true';
+
+        var initialized = false;
+
+        toggle.addEventListener('click', function() {
+          var isOpen = container.classList.contains('hidden');
+          container.classList.toggle('hidden', !isOpen);
+          toggle.classList.toggle('hidden', isOpen);
+          if (isOpen && !initialized) {
+            new PagefindUI({ element: '#search', showSubResults: true, showImages: false });
+            initialized = true;
+          }
+          if (isOpen) {
+            setTimeout(function() {
+              var input = container.querySelector('.pagefind-ui__search-input');
+              if (input) input.focus();
+            }, 50);
+          }
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!container.classList.contains('hidden') && !container.contains(e.target) && e.target !== toggle) {
+            var input = container.querySelector('.pagefind-ui__search-input');
+            if (input && !input.value) {
+              container.classList.add('hidden');
+              toggle.classList.remove('hidden');
+            }
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSearch);
+      } else {
+        initSearch();
+      }
+      document.addEventListener('astro:after-swap', function() { initSearch(); });
+    </script>
+
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-10">
+        <a href="/blog" class="text-sm px-3 py-1.5 rounded-full bg-[var(--color-accent)] text-white transition-colors">
+          All
+        </a>
+        {allTags.map(tag => (
+          <a
+            href={`/tags/${tag}`}
+            class="text-sm px-3 py-1.5 rounded-full bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:bg-[var(--color-border)] dark:hover:bg-[var(--color-dark-border)] transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="divide-y divide-[var(--color-border)] dark:divide-[var(--color-dark-border)]">
+      {posts.map(post => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          tags={post.data.tags}
+          readingTime={post.data.readingTime || getReadingTime(post.body || '')}
+          slug={post.id}
+        />
+      ))}
+    </div>
+
+    {posts.length === 0 && (
+      <p class="text-center text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] py-16">
+        No posts yet. Check back soon!
+      </p>
+    )}
+  </div>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const url = Astro.url.href;
+---
+
+<div class="mt-12 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
+  <p class="text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] mb-3">Share this post</p>
+  <div class="flex gap-3">
+    <a
+      href={`https://x.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-sm px-4 py-2 rounded-lg bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] transition-colors"
+    >
+      X
+    </a>
+    <a
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-sm px-4 py-2 rounded-lg bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] transition-colors"
+    >
+      LinkedIn
+    </a>
+    <button
+      id="copy-link"
+      class="text-sm px-4 py-2 rounded-lg bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] transition-colors cursor-pointer"
+    >
+      Copy link
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  document.getElementById('copy-link')?.addEventListener('click', async function() {
+    await navigator.clipboard.writeText(window.location.href);
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = 'Copy link'; }, 2000);
+  });
+</script>

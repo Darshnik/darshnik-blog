@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../utils/formatDate';
+import { getReadingTime } from '../../utils/readingTime';
+import ShareButtons from '../../components/ShareButtons.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const currentIndex = sortedPosts.findIndex(p => p.id === post.id);
+const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
+const readingTime = post.data.readingTime || getReadingTime(post.body || '');
+---
+
+<BaseLayout title={`${post.data.title} — Darshnik Swamy`} description={post.data.description} image={post.data.heroImage} article={true}>
+  <article data-pagefind-body class="max-w-[960px] mx-auto px-6 py-16 md:py-24">
+    <header class="mb-12">
+      <div class="flex items-center gap-3 text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] mb-4">
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        <span>&middot;</span>
+        <span>{readingTime} min read</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-[var(--color-text)] dark:text-[var(--color-dark-text)] leading-tight">
+        {post.data.title}
+      </h1>
+      {post.data.tags.length > 0 && (
+        <div class="flex gap-2 mt-4">
+          {post.data.tags.map(tag => (
+            <a
+              href={`/tags/${tag}`}
+              class="text-xs px-2 py-1 rounded-full bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors"
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <ShareButtons title={post.data.title} />
+
+    <nav class="mt-16 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
+      <div class="flex justify-between">
+        {prevPost ? (
+          <a href={`/blog/${prevPost.id}`} class="group max-w-[45%]">
+            <span class="text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)]">&larr; Previous</span>
+            <p class="text-[var(--color-text)] dark:text-[var(--color-dark-text)] group-hover:text-[var(--color-accent)] dark:group-hover:text-[var(--color-dark-accent)] transition-colors font-medium mt-1">
+              {prevPost.data.title}
+            </p>
+          </a>
+        ) : <div />}
+        {nextPost ? (
+          <a href={`/blog/${nextPost.id}`} class="group max-w-[45%] text-right ml-auto">
+            <span class="text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)]">Next &rarr;</span>
+            <p class="text-[var(--color-text)] dark:text-[var(--color-dark-text)] group-hover:text-[var(--color-accent)] dark:group-hover:text-[var(--color-dark-accent)] transition-colors font-medium mt-1">
+              {nextPost.data.title}
+            </p>
+          </a>
+        ) : <div />}
+      </div>
+    </nav>
+  </article>
+</BaseLayout>

@@ -1,0 +1,35 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Writing' },
+  { href: '/about', label: 'About' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="border-b border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
+  <nav class="max-w-[1080px] mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="text-lg font-semibold text-[var(--color-text)] dark:text-[var(--color-dark-text)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors">
+      Darshnik Swamy
+    </a>
+    <div class="flex items-center gap-4 sm:gap-6">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm transition-colors',
+            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+              ? 'text-[var(--color-accent)] dark:text-[var(--color-dark-accent)] font-medium'
+              : 'text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)]',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>

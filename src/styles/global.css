@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAFAF7;
+  --color-surface: #F5F5F0;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #6B6B6B;
+  --color-accent: #C05621;
+  --color-accent-hover: #9C4221;
+  --color-border: #E8E8E3;
+  --color-code-bg: #F0EDE8;
+
+  --color-dark-bg: #1A1A1A;
+  --color-dark-surface: #2A2A2A;
+  --color-dark-text: #E8E8E3;
+  --color-dark-text-secondary: #A0A0A0;
+  --color-dark-accent: #E07840;
+  --color-dark-accent-hover: #F09060;
+  --color-dark-border: #3A3A3A;
+  --color-dark-code-bg: #2A2A2A;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Lora', 'Charter', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
+}
+
+/* Prose styles for blog post content */
+.prose {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+.dark .prose {
+  color: var(--color-dark-text);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--color-text);
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: var(--color-dark-text);
+}
+
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.5rem; }
+.prose h3 { font-size: 1.25rem; }
+
+.prose p {
+  margin-bottom: 1.5em;
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.prose a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+.dark .prose a {
+  color: var(--color-dark-accent);
+}
+
+.dark .prose a:hover {
+  border-bottom-color: var(--color-dark-accent);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1.5em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.dark .prose blockquote {
+  border-left-color: var(--color-dark-accent);
+  color: var(--color-dark-text-secondary);
+}
+
+.prose code {
+  background-color: var(--color-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.dark .prose code {
+  background-color: var(--color-dark-code-bg);
+}
+
+.prose pre {
+  background-color: var(--color-code-bg);
+  padding: 1.25em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.dark .prose pre {
+  background-color: var(--color-dark-code-bg);
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose img {
+  border-radius: 8px;
+  margin: 2em auto;
+  max-width: 100%;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1em 0;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2.5em 0;
+}
+
+.dark .prose hr {
+  border-top-color: var(--color-dark-border);
+}
+
+/* Pagefind search UI overrides */
+.pagefind-ui {
+  --pagefind-ui-scale: 0.7 !important;
+  --pagefind-ui-primary: #C05621 !important;
+  --pagefind-ui-text: #1A1A1A !important;
+  --pagefind-ui-background: #F5F5F0 !important;
+  --pagefind-ui-border: #E8E8E3 !important;
+  --pagefind-ui-tag: #F0EDE8 !important;
+  --pagefind-ui-border-width: 1px !important;
+  --pagefind-ui-border-radius: 8px !important;
+  --pagefind-ui-font: 'Inter', system-ui, sans-serif !important;
+}
+
+.dark .pagefind-ui {
+  --pagefind-ui-primary: #E07840 !important;
+  --pagefind-ui-text: #E8E8E3 !important;
+  --pagefind-ui-background: #2A2A2A !important;
+  --pagefind-ui-border: #3A3A3A !important;
+  --pagefind-ui-tag: #2A2A2A !important;
+}
+
+/* Hide Pagefind's built-in search icon */
+.pagefind-ui__form::before {
+  display: none !important;
+}
+
+/* Compact the search input */
+.pagefind-ui__search-input {
+  padding-left: 16px !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.pagefind-ui__search-clear {
+  height: 34px !important;
+  top: 2px !important;
+  right: 2px !important;
+}
+
+/* Limit search container width */
+#search {
+  max-width: 320px;
+}
