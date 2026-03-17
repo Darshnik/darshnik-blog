@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@astrojs/cloudflare':
-        specifier: ^13.1.1
-        version: 13.1.1(@types/node@24.12.0)(astro@6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0))(jiti@2.6.1)(lightningcss@1.31.1)(workerd@1.20260312.1)(wrangler@4.73.0)
+        specifier: ^13.1.2
+        version: 13.1.2(@types/node@24.12.0)(astro@6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0))(jiti@2.6.1)(lightningcss@1.31.1)(workerd@1.20260312.1)(wrangler@4.74.0)
       '@astrojs/mdx':
         specifier: ^5.0.0
         version: 5.0.0(astro@6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0))
@@ -37,15 +37,15 @@ importers:
         specifier: ^13.0.3
         version: 13.0.3
       wrangler:
-        specifier: ^4.73.0
-        version: 4.73.0
+        specifier: ^4.74.0
+        version: 4.74.0
 
 packages:
 
-  '@astrojs/cloudflare@13.1.1':
-    resolution: {integrity: sha512-Bx2Sr/cLi9VUA0iArMYc/O6wsKZdC2W6prE8dzMGbJqaF5oEBVBG6UclKe1T95SISrDIysuLlFNvVWL6htqnuA==}
+  '@astrojs/cloudflare@13.1.2':
+    resolution: {integrity: sha512-Uz2ci/OwmaI50jSSzEy0jOqUlsZisHHRjFATS/0qqqJGEdwRtxArQtoplmwqUAmw/ojc1RKoSJWdB3qbKOU2mQ==}
     peerDependencies:
-      astro: ^6.0.0-alpha.0
+      astro: ^6.0.0
       wrangler: ^4.61.1
 
   '@astrojs/compiler@3.0.0':
@@ -2176,6 +2176,11 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  miniflare@4.20260312.1:
+    resolution: {integrity: sha512-YSWxec9ssisqkQgaCgcIQxZlB41E9hMiq1nxUgxXHRrE9NsfyC6ptSt8yfgBobsKIseAVKLTB/iEDpMumBv8oA==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   minimatch@9.0.9:
     resolution: {integrity: sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -2836,8 +2841,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.73.0:
-    resolution: {integrity: sha512-VJXsqKDFCp6OtFEHXITSOR5kh95JOknwPY8m7RyQuWJQguSybJy43m4vhoCSt42prutTef7eeuw7L4V4xiynGw==}
+  wrangler@4.74.0:
+    resolution: {integrity: sha512-3qprbhgdUyqYGHZ+Y1k0gsyHLMOlLrKL/HU0LDqLlCkbsKPprUA0/ThE4IZsxD84xAAXY6pv5JUuxS2+OnMa3A==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
@@ -2940,16 +2945,16 @@ packages:
 
 snapshots:
 
-  '@astrojs/cloudflare@13.1.1(@types/node@24.12.0)(astro@6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0))(jiti@2.6.1)(lightningcss@1.31.1)(workerd@1.20260312.1)(wrangler@4.73.0)':
+  '@astrojs/cloudflare@13.1.2(@types/node@24.12.0)(astro@6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0))(jiti@2.6.1)(lightningcss@1.31.1)(workerd@1.20260312.1)(wrangler@4.74.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.8.0
       '@astrojs/underscore-redirects': 1.0.1
-      '@cloudflare/vite-plugin': 1.28.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1))(workerd@1.20260312.1)(wrangler@4.73.0)
+      '@cloudflare/vite-plugin': 1.28.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1))(workerd@1.20260312.1)(wrangler@4.74.0)
       astro: 6.0.4(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0)
       piccolore: 0.1.3
       tinyglobby: 0.2.15
       vite: 7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)
-      wrangler: 4.73.0
+      wrangler: 4.74.0
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -3080,13 +3085,13 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260312.1
 
-  '@cloudflare/vite-plugin@1.28.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1))(workerd@1.20260312.1)(wrangler@4.73.0)':
+  '@cloudflare/vite-plugin@1.28.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1))(workerd@1.20260312.1)(wrangler@4.74.0)':
     dependencies:
       '@cloudflare/unenv-preset': 2.15.0(unenv@2.0.0-rc.24)(workerd@1.20260312.1)
       miniflare: 4.20260312.0
       unenv: 2.0.0-rc.24
       vite: 7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.31.1)
-      wrangler: 4.73.0
+      wrangler: 4.74.0
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -5465,6 +5470,18 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  miniflare@4.20260312.1:
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      sharp: 0.34.5
+      undici: 7.18.2
+      workerd: 1.20260312.1
+      ws: 8.18.0
+      youch: 4.1.0-beta.10
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   minimatch@9.0.9:
     dependencies:
       brace-expansion: 2.0.2
@@ -6229,13 +6246,13 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260312.1
       '@cloudflare/workerd-windows-64': 1.20260312.1
 
-  wrangler@4.73.0:
+  wrangler@4.74.0:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@cloudflare/unenv-preset': 2.15.0(unenv@2.0.0-rc.24)(workerd@1.20260312.1)
       blake3-wasm: 2.1.5
       esbuild: 0.27.3
-      miniflare: 4.20260312.0
+      miniflare: 4.20260312.1
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.24
       workerd: 1.20260312.1
