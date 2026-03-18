@@ -14,7 +14,7 @@
     "deploy": "pnpm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.1",
+    "@astrojs/cloudflare": "^13.1.2",
     "@astrojs/mdx": "^5.0.0",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "lighthouse": "^13.0.3",
-    "wrangler": "^4.73.0"
+    "wrangler": "^4.75.0"
   }
 }
