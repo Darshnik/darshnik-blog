@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../utils/formatDate';
 import { getReadingTime } from '../../utils/readingTime';
 import ShareButtons from '../../components/ShareButtons.astro';
+import Comments from '../../components/Comments.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -55,6 +56,8 @@ const readingTime = post.data.readingTime || getReadingTime(post.body || '');
     </div>
 
     <ShareButtons title={post.data.title} />
+
+    <Comments title={post.data.title} />
 
     <nav class="mt-16 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
       <div class="flex justify-between">

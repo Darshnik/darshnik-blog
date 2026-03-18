@@ -1,0 +1,100 @@
+---
+const url = Astro.url.href;
+const title = Astro.props.title as string || '';
+---
+
+<div class="mt-12 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
+  <h3 class="text-lg font-semibold text-[var(--color-text)] dark:text-[var(--color-dark-text)] mb-6">
+    Join the conversation
+  </h3>
+
+  <div class="giscus-container mb-6">
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo="Darshnik/darshnik-blog"
+      data-repo-id="R_kgDORnctcw"
+      data-category="General"
+      data-category-id="DIC_kwDORnctc84C4pxh"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </div>
+
+  <div class="flex gap-3 mt-6">
+    <a
+      href={`https://x.com/search?q=${encodeURIComponent(url)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-sm px-4 py-2 rounded-lg bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] transition-colors"
+    >
+      Discuss on X
+    </a>
+    <a
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-sm px-4 py-2 rounded-lg bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] text-[var(--color-text-secondary)] dark:text-[var(--color-dark-text-secondary)] hover:text-[var(--color-text)] dark:hover:text-[var(--color-dark-text)] transition-colors"
+    >
+      Discuss on LinkedIn
+    </a>
+  </div>
+</div>
+
+<script is:inline>
+  // Sync Giscus theme with dark mode toggle
+  function getGiscusTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  function setGiscusTheme(theme) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (iframe) {
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: theme } } },
+        'https://giscus.app'
+      );
+    }
+  }
+
+  // Watch for dark mode changes
+  const observer = new MutationObserver(function () {
+    setGiscusTheme(getGiscusTheme());
+  });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+
+  // Re-initialize Giscus after View Transitions navigation
+  document.addEventListener('astro:after-swap', function () {
+    const container = document.querySelector('.giscus-container');
+    if (container && !container.querySelector('script')) {
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.dataset.repo = 'Darshnik/darshnik-blog';
+      script.dataset.repoId = 'R_kgDORnctcw';
+      script.dataset.category = 'General';
+      script.dataset.categoryId = 'DIC_kwDORnctc84C4pxh';
+      script.dataset.mapping = 'pathname';
+      script.dataset.strict = '0';
+      script.dataset.reactionsEnabled = '1';
+      script.dataset.emitMetadata = '0';
+      script.dataset.inputPosition = 'bottom';
+      script.dataset.theme = getGiscusTheme();
+      script.dataset.lang = 'en';
+      script.dataset.loading = 'lazy';
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+      container.appendChild(script);
+    }
+  });
+</script>

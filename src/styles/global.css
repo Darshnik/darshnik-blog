@@ -269,6 +269,15 @@ body {
   color: var(--color-dark-accent);
 }
 
+/* Giscus comments container */
+.giscus-container {
+  min-height: 150px;
+}
+
+.giscus-container iframe.giscus-frame {
+  width: 100% !important;
+}
+
 /* Limit search container width */
 #search {
   max-width: 320px;
